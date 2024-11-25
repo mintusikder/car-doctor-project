@@ -16,7 +16,7 @@ const slides = [
 
 const Carousel = () => {
   return (
-    <div className="carousel w-full">
+    <div className="carousel w-full mb-[130px]">
       {slides.map((slide, index) => (
         <div
           id={slide.id}
