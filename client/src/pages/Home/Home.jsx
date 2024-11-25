@@ -1,6 +1,7 @@
 import About from "./About";
 import Carousel from "./Carousel";
 import Contact from "./Contact";
+import Service from "./Service/Service";
 
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
         <div >
            <Carousel></Carousel>
            <About></About>
+           <Service></Service>
            <Contact></Contact>
         </div>
     );
