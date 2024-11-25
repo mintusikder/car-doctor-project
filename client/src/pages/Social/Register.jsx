@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import loginImg from "../../assets/images/login/login.svg";
 
 const Register = () => {
@@ -73,6 +74,7 @@ const Register = () => {
                 Register
               </button>
             </div>
+            <p>Already have an account <Link className="underline" to="/login">Login</Link></p>
           </form>
         </div>
       </div>

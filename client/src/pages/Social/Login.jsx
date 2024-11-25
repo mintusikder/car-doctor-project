@@ -66,7 +66,7 @@ const Login = () => {
                 Login
               </button>
             </div>
-            <p>New to <Link to="/register">Register</Link></p>
+            <p>New to <Link className="underline" to="/register">Register</Link></p>
           </form>
         </div>
       </div>
