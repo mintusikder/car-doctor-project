@@ -1,14 +1,25 @@
 import { Link } from "react-router-dom";
 import loginImg from "../../assets/images/login/login.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const Login = () => {
-   const handelLogin = e =>{
-    e.preventDefault()
-    const form = e.target 
-    const email = form.email.value 
-    const password = form.password.value 
-    console.log(email, password)
-   } 
+  const { siginUser } = useContext(AuthContext);
+  const handelLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+    siginUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col md:flex-row gap-10 items-center">
@@ -66,7 +77,12 @@ const Login = () => {
                 Login
               </button>
             </div>
-            <p>New to <Link className="underline" to="/register">Register</Link></p>
+            <p>
+              New to{" "}
+              <Link className="underline" to="/register">
+                Register
+              </Link>
+            </p>
           </form>
         </div>
       </div>
