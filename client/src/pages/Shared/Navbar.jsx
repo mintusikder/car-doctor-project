@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { BsHandbag } from "react-icons/bs";
-import logo from "../../assets/images/banner/logo.svg"
+import logo from "../../assets/images/banner/logo.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
 const Navbar = () => {
+  const {user,logOut} = useContext(AuthContext)
+  const handelLogOut =() =>{
+    logOut()
+    .then(() =>{})
+    .catch(err =>{
+      console.log(err)
+    })
+  }
   const navItems = (
     <>
       <li>
@@ -20,9 +30,15 @@ const Navbar = () => {
       <li>
         <Link to="/contact">Contact</Link>
       </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
+      {user ? (
+        <li>
+          <Link onClick={() =>handelLogOut()}>LogOut</Link>
+        </li>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -52,7 +68,7 @@ const Navbar = () => {
             {navItems}
           </ul>
         </div>
-       <img className="h-12" src={logo} alt="" />
+        <img className="h-12" src={logo} alt="" />
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
