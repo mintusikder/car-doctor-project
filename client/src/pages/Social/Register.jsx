@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import loginImg from "../../assets/images/login/login.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
   const handelRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -9,6 +12,14 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(name, email, password);
+    createUser( email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log("user create success full", user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -74,7 +85,12 @@ const Register = () => {
                 Register
               </button>
             </div>
-            <p>Already have an account <Link className="underline" to="/login">Login</Link></p>
+            <p>
+              Already have an account{" "}
+              <Link className="underline" to="/login">
+                Login
+              </Link>
+            </p>
           </form>
         </div>
       </div>
