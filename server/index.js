@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 //middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173","http://localhost:5174"],
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     credentials: true,
   })
 );
@@ -36,6 +36,16 @@ async function run() {
 
     app.get("/services", async (req, res) => {
       const result = await serverCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/services/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const options = {
+        projection: { _id: 0, title: 1, img: 1, price: 1, service_id: 1 },
+      };
+      const result = await serverCollection.findOne(query,options);
       res.send(result);
     });
 
