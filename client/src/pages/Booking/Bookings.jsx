@@ -1,18 +1,23 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import BookingDetails from "./BookingsDetails";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const url = `http://localhost:5000/bookings?email=${user?.email}`;
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setBookings(data);
-      });
+    axios.get(url,{withCredentials:true}).then((res) => {
+      setBookings(res.data);
+    });
+
+    // fetch(url)
+    // .then((res) => res.json())
+    // .then((data) => {
+    //   setBookings(data);
+    // });
   }, [url]);
   const handelDelete = (id) => {
     Swal.fire({
@@ -32,9 +37,15 @@ const Bookings = () => {
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount > 0) {
-              Swal.fire("Deleted!", "Your booking has been deleted.", "success");
+              Swal.fire(
+                "Deleted!",
+                "Your booking has been deleted.",
+                "success"
+              );
               // Remove deleted booking from state
-              const remaining = bookings.filter((booking) => booking._id !== id);
+              const remaining = bookings.filter(
+                (booking) => booking._id !== id
+              );
               setBookings(remaining);
             } else {
               Swal.fire("Error!", "Failed to delete the booking.", "error");
@@ -47,7 +58,7 @@ const Bookings = () => {
       }
     });
   };
-  
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
