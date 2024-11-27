@@ -8,6 +8,7 @@ import Contact from "../pages/Home/Contact";
 import Register from "../pages/Social/Register";
 import Booking from "../pages/Booking/Booking";
 import Bookings from "../pages/Booking/Bookings";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -40,14 +41,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "/booking/:id",
-        element: <Booking></Booking>,
+        element: (
+          <PrivateRoutes>
+            <Booking></Booking>
+          </PrivateRoutes>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/services/${params.id}`),
       },
       {
         path: "/bookings",
-        element: <Bookings></Bookings>,
-    
+        element: (
+          <PrivateRoutes>
+            <Bookings></Bookings>
+          </PrivateRoutes>
+        ),
       },
     ],
   },
