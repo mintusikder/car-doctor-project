@@ -33,7 +33,8 @@ async function run() {
     // await client.db("admin").command({ ping: 1 });
 
     const serverCollection = client.db("cardoctorDB").collection("services");
-
+    const bookingCollection = client.db("cardoctorDB").collection("bookings");
+    //services api
     app.get("/services", async (req, res) => {
       const result = await serverCollection.find().toArray();
       res.send(result);
@@ -45,7 +46,22 @@ async function run() {
       const options = {
         projection: { _id: 0, title: 1, img: 1, price: 1, service_id: 1 },
       };
-      const result = await serverCollection.findOne(query,options);
+      const result = await serverCollection.findOne(query, options);
+      res.send(result);
+    });
+    //booking api
+    app.post("/bookings", async (req, res) => {
+      const query = req.body;
+      const result = await bookingCollection.insertOne(query);
+      res.send(result);
+    });
+
+    app.get("/bookings", async (req, res) => {
+      let query = {}
+      if(req.query?.email){
+          query={email : req.query.email} 
+      }
+      const result = await bookingCollection.find(query).toArray();
       res.send(result);
     });
 

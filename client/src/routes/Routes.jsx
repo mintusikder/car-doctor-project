@@ -7,6 +7,7 @@ import Login from "../pages/Social/Login";
 import Contact from "../pages/Home/Contact";
 import Register from "../pages/Social/Register";
 import Booking from "../pages/Booking/Booking";
+import Bookings from "../pages/Booking/Bookings";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,11 @@ export const router = createBrowserRouter([
         element: <Booking></Booking>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/services/${params.id}`),
+      },
+      {
+        path: "/bookings",
+        element: <Bookings></Bookings>,
+    
       },
     ],
   },

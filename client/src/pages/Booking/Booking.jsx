@@ -14,7 +14,7 @@ const Booking = () => {
     const email = form.email.value;
     const date = form.date.value;
     const price = form.price.value;
-    console.log(name, email, date, price);
+
     const booking = {
       customerName: name,
       email,
@@ -24,7 +24,21 @@ const Booking = () => {
       img: img,
       service_id: service_id,
     };
-    console.log(booking);
+    
+    fetch(`http://localhost:5000/bookings`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (

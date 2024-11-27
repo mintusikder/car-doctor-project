@@ -30,6 +30,9 @@ const Navbar = () => {
       <li>
         <Link to="/contact">Contact</Link>
       </li>
+      <li>
+        <Link to="/bookings">My Booking</Link>
+      </li>
       {user ? (
         <li>
           <Link onClick={() =>handelLogOut()}>LogOut</Link>
