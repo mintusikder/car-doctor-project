@@ -13,6 +13,19 @@ const Bookings = () => {
         setBookings(data);
       });
   }, [url]);
+  const handelDelete = (id) => {
+    fetch(`http://localhost:5000/bookings/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          alert("delete successful");
+          const remaining = bookings.filter((booking) => booking._id !== id);
+          setBookings(remaining);
+        }
+      });
+  };
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -30,9 +43,13 @@ const Bookings = () => {
           </tr>
         </thead>
         <tbody>
-            {
-                bookings.map(booking=> <BookingDetails key={booking._id} booking={booking}></BookingDetails>)
-            }
+          {bookings.map((booking) => (
+            <BookingDetails
+              key={booking._id}
+              booking={booking}
+              handelDelete={handelDelete}
+            ></BookingDetails>
+          ))}
         </tbody>
       </table>
     </div>

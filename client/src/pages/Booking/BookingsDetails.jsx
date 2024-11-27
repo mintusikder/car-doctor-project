@@ -1,10 +1,11 @@
-const BookingDetails = ({ booking }) => {
-  const { email, date, price, img, customerName } = booking;
+const BookingDetails = ({ booking ,handelDelete}) => {
+  const { email, date, price, img, customerName ,_id} = booking;
+  
   return (
     <tr>
       <th>
         <label>
-          <button className="btn btn-circle btn-outline">
+          <button onClick={()=>handelDelete(_id)} className="btn btn-circle btn-outline">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
