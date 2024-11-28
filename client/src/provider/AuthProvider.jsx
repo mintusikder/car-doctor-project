@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -24,16 +25,34 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const logOut = () =>{
-    setLoading(false)
-    return signOut(auth)
-  }
+  const logOut = () => {
+    setLoading(false);
+    return signOut(auth);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setLoading(false);
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
       setUser(currentUser);
+      setLoading(false);
       console.log("User", currentUser);
+      if (currentUser) {
+        axios
+          .post("http://localhost:5000/jwt", loggedUser, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log("token resp", res.data);
+          });
+      } else {
+        axios.post("http://localhost:5000/logout", loggedUser, {
+          withCredentials: true,
+        })
+        .then(res => {
+          console.log(res.data)
+        })
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -43,7 +62,7 @@ const AuthProvider = ({ children }) => {
     loading,
     createUser,
     siginUser,
-    logOut
+    logOut,
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

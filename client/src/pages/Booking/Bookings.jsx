@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../provider/AuthProvider";
+import { useEffect, useState } from "react";
 import BookingDetails from "./BookingsDetails";
 import Swal from "sweetalert2";
 import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const Bookings = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth()
   const [bookings, setBookings] = useState([]);
   const url = `http://localhost:5000/bookings?email=${user?.email}`;
   useEffect(() => {
-    axios.get(url,{withCredentials:true}).then((res) => {
+    axios.get(url,{withCredentials: true}).then((res) => {
       setBookings(res.data);
     });
 

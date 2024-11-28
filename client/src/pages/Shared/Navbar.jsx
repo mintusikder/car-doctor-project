@@ -2,17 +2,16 @@ import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { BsHandbag } from "react-icons/bs";
 import logo from "../../assets/images/banner/logo.svg";
-import { useContext } from "react";
-import { AuthContext } from "../../provider/AuthProvider";
+import useAuth from "../../hooks/useAuth";
 const Navbar = () => {
-  const {user,logOut} = useContext(AuthContext)
-  const handelLogOut =() =>{
+  const { user, logOut } = useAuth();
+  const handelLogOut = () => {
     logOut()
-    .then(() =>{})
-    .catch(err =>{
-      console.log(err)
-    })
-  }
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const navItems = (
     <>
       <li>
@@ -35,7 +34,7 @@ const Navbar = () => {
       </li>
       {user ? (
         <li>
-          <Link onClick={() =>handelLogOut()}>LogOut</Link>
+          <Link onClick={() => handelLogOut()}>LogOut</Link>
         </li>
       ) : (
         <li>
