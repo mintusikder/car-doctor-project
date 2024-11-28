@@ -10,7 +10,11 @@ const port = process.env.PORT || 5000;
 //middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: [
+      "http://localhost:5173", "http://localhost:5174"
+      // "https://car-doctor-c8a12.firebaseapp.com",
+      // "https://car-doctor-c8a12.web.app"
+    ],
     credentials: true,
   })
 );
@@ -73,7 +77,7 @@ async function run() {
     //logout clear cookie
     app.post("/logout", async (req, res) => {
       const user = req.body;
-      console.log("logout", user)
+      console.log("logout", user);
       res.clearCookie("token", { maxAge: 0 }).send({ success: true });
     });
 

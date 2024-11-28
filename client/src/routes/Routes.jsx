@@ -46,6 +46,7 @@ export const router = createBrowserRouter([
             <Booking></Booking>
           </PrivateRoutes>
         ),
+        //http://localhost:5000
         loader: ({ params }) =>
           fetch(`http://localhost:5000/services/${params.id}`),
       },

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BookingDetails from "./BookingsDetails";
 import Swal from "sweetalert2";
-// import axios from "axios";
+import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -9,16 +9,16 @@ const Bookings = () => {
   const { user } = useAuth();
   const [bookings, setBookings] = useState([]);
   const axiosSecure = useAxiosSecure();
-  // const url = `http://localhost:5000/bookings?email=${user?.email}`;
-  const url = `/bookings?email=${user?.email}`;
+  const url = `http://localhost:5000/bookings?email=${user?.email}`;
+  // const url = `/bookings?email=${user?.email}`;
   useEffect(() => {
-    // axios.get(url,{withCredentials: true}).then((res) => {
-    //   setBookings(res.data);
-    // });
-
-    axiosSecure.get(url).then((res) => {
+    axios.get(url,{withCredentials: true}).then((res) => {
       setBookings(res.data);
     });
+
+    // axiosSecure.get(url).then((res) => {
+    //   setBookings(res.data);
+    // });
 
     // fetch(url)
     // .then((res) => res.json())
